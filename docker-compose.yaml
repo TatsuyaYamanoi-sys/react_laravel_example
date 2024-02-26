@@ -1,19 +1,21 @@
 version: '3.9'
 # https://sagara.ink/article/app/204/
+# https://qiita.com/ucan-lab/items/56c9dc3cf2e6762672f4
 
 services:
   proxy:
     container_name: example-proxy
     build: ./nginx
     ports: 
-      - 8000:80
+      - 8080:80
     volumes:
-      - ./frontend:/usr/share/nginx/html  # 動作確認用
+      - ./backend:/usr/share/nginx/html  # 動作確認用
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
   
   backend:
-    container_name: example-fe
-    build: ./php
+    container_name: example-be
+    build: ./backend
+    restart: always
     volumes:
       - ./backend:/var/www/html
       - ./backend/php.ini:/usr/local/php/php.ini
@@ -21,16 +23,19 @@ services:
       - db
   
   frontend:
-    container_name: example-be
+    container_name: example-fe
     build: ./frontend
+    stdin_open: true
+    restart: always
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
+      - ./frontend:/usr/src/app
 
   db:
     container_name: example-db
     build: ./mysql
+    restart: always
     ports:
       - 3306:3306
     volumes:
