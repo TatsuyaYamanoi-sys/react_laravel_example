@@ -1,0 +1,8 @@
+FROM node:16-alpine
+
+# WORKDIR /app
+
+# package.json を元に node_modules を作成
+# COPY . .
+# RUN npm install     
+# RUN npm run build
