@@ -17,7 +17,6 @@ RUN apk update
 RUN apk add git
 
 # install php extensions
-RUN docker-php-ext-install pdo pdo_mysql zip bcmath
-
+RUN docker-php-ext-install pdo pdo_mysql
 # copy soruce
 # COPY . .
